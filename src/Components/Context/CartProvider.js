@@ -3,6 +3,7 @@ import CartContext from './CartContext'
 
 const CartProvider = (props) => {
     const[cartOpen,setCartOpen]=useState(false)
+    const[login,setLogin]=useState(null)
     const[data,setData]=useState([
         {
           Id:1,
@@ -68,12 +69,17 @@ const CartProvider = (props) => {
       console.log(addItem)
       setData(addItem)
     }
+    function isLoggedInFunctionHandler(token) {
+      setLogin(token)
+    }
     const cartCtx={
         items:data,
         showCart:showCartHandler,
         openCart:cartOpen,
         addItemToCart:addItemToCartHandler,
         removeItemFromCart:removeItemFromCartHandler,
+        isLoggedIn:login,
+        isLoggedInFunction:isLoggedInFunctionHandler
     }
   return (
     <CartContext.Provider value={cartCtx}>
