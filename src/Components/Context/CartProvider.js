@@ -1,9 +1,11 @@
 import React,{useState} from 'react'
 import CartContext from './CartContext'
+import axios from 'axios'
 
 const CartProvider = (props) => {
     const[cartOpen,setCartOpen]=useState(false)
-    const[login,setLogin]=useState(null)
+    const[login,setLogin]=useState(false)
+    const[tokenId,setTokenId]=useState(null)
     const[data,setData]=useState([
         {
           Id:1,
@@ -47,8 +49,8 @@ const CartProvider = (props) => {
         }
     }
     function addItemToCartHandler(id) {
+
       const addItem=data.filter((item)=>{
-        console.log(item);
         if(item.Id===Number(id)){
           return item.Qty=Number(item.Qty)+1
         }
@@ -56,21 +58,68 @@ const CartProvider = (props) => {
         
       })
       setData(addItem)
+      localStorage.setItem('Cart',JSON.stringify(addItem))
     }
     function removeItemFromCartHandler(id) {
-      const addItem=data.filter((item)=>{
-        console.log(item);
+      const removeItem=data.filter((item)=>{
         if(item.Id===Number(id)){
           return item.Qty='0'
         }
         return item
         
       })
-      console.log(addItem)
-      setData(addItem)
+      setData(removeItem)
+      localStorage.setItem('Cart',JSON.stringify(removeItem))
     }
-    function isLoggedInFunctionHandler(token) {
-      setLogin(token)
+    async function crudcrud(cart) {
+      const storage=await axios.get(`https://crudcrud.com/api/917fdde18c934ece8599c8be8f5a27a3/${tokenId}`)
+      console.log(storage.data.length)
+      try{
+        if(storage.data.length===0){
+          const response=await axios.post(`https://crudcrud.com/api/917fdde18c934ece8599c8be8f5a27a3/${tokenId}`,{cart})
+          try {
+            console.log(response.data)
+            localStorage.setItem('CrudID',response.data._id)
+          } catch (error) {
+            console.log('error');
+          }
+        }
+        else{
+          const response=await axios.get(`https://crudcrud.com/api/917fdde18c934ece8599c8be8f5a27a3/${tokenId}`)
+          try{
+            const Key=await response.data[0]._id
+            console.log(Key);
+            const update=await axios.put(`https://crudcrud.com/api/917fdde18c934ece8599c8be8f5a27a3/${tokenId}/${Key}`,{cart})
+            try {
+              console.log(response.data)
+              localStorage.setItem('CrudID',update.data._id)
+            } catch (error) {
+              console.log('error');
+            }
+          }catch{
+            console.log('error in storage')
+          }
+
+        }
+      }catch{
+        const response=await axios.post(`https://crudcrud.com/api/917fdde18c934ece8599c8be8f5a27a3/${tokenId}`,{cart})
+            try {
+              console.log(response.data)
+              localStorage.setItem('CrudID',response.data._id)
+            } catch (error) {
+              console.log('error in storage catch ');
+            }
+      }
+      
+    }
+    function isLoggedInFunctionHandler(param) {
+      setLogin(param)
+    }
+    function tokenHandler(params) {
+      setTokenId(params)
+    }
+    function itemsHandler(params){
+      setData(params)
     }
     const cartCtx={
         items:data,
@@ -78,8 +127,14 @@ const CartProvider = (props) => {
         openCart:cartOpen,
         addItemToCart:addItemToCartHandler,
         removeItemFromCart:removeItemFromCartHandler,
-        isLoggedIn:login,
-        isLoggedInFunction:isLoggedInFunctionHandler
+        isLoggedIn:{
+          loggedIn:login,
+          token:tokenId
+        },
+        isLoggedInFunction:isLoggedInFunctionHandler,
+        tokenFunction:tokenHandler,
+        loadFromCrud:crudcrud,
+        itemsFromCrud:itemsHandler
     }
   return (
     <CartContext.Provider value={cartCtx}>

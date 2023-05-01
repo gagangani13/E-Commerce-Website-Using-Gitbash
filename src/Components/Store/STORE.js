@@ -48,7 +48,7 @@ const STORE= () => {
         >
           SEE CART
         </Button>
-        {!details.isLoggedIn&&<Route>
+        {!details.isLoggedIn.loggedIn&&<Route>
           <Redirect to='/LOGIN'/></Route>}
       </div>
     </>

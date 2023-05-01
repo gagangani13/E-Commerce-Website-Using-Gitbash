@@ -1,9 +1,10 @@
 import React, { useContext, useRef } from "react";
 import { Form, Button } from "react-bootstrap";
-import { Route,Redirect } from "react-router-dom/cjs/react-router-dom";
+import { Route, Redirect } from "react-router-dom/cjs/react-router-dom";
 import CartContext from "../Context/CartContext";
+import axios from "axios";
 const LOGIN = () => {
-    const ctx=useContext(CartContext)
+  const ctx = useContext(CartContext);
   const emailRef = useRef();
   const passwordRef = useRef();
   async function addData(e) {
@@ -29,9 +30,21 @@ const LOGIN = () => {
     const data = await response.json();
     try {
       if (response.ok) {
-        const token = data.idToken;
-        ctx.isLoggedInFunction(token)
-
+        console.log(data);
+        const token = data.localId;
+        ctx.isLoggedInFunction(true);
+        ctx.tokenFunction(token);
+        localStorage.setItem("Login", true);
+        localStorage.setItem("Token", token);
+        const crudData=await axios.get(`https://crudcrud.com/api/917fdde18c934ece8599c8be8f5a27a3/${token}`)
+        try {
+          const data=crudData.data[0].cart
+          console.log(data);
+          ctx.itemsFromCrud(data)
+          localStorage.setItem('Cart',JSON.stringify(data))
+        } catch (error) {
+          console.log('No data in crudcrud')
+        }
       } else {
         throw new Error();
       }
@@ -78,8 +91,11 @@ const LOGIN = () => {
           </Button>
         </Form>
       </div>
-      {ctx.isLoggedIn&&<Route>
-        <Redirect to='/STORE'/></Route>}
+      {ctx.isLoggedIn.loggedIn && (
+        <Route>
+          <Redirect to="/STORE" />
+        </Route>
+      )}
     </div>
   );
 };

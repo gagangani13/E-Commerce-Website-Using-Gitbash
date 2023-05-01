@@ -38,7 +38,6 @@ const Product = () => {
                   ADD TO CART
                 </Button>
               </Card.Body>
-              {console.log(reRoute)}
               {reRoute&&<Route path="/STORE" >
                 <Redirect to= {`/STORE/${reRoute}`}  />
                 <ProductDetail/>
