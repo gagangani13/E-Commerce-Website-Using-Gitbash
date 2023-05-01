@@ -6,8 +6,12 @@ const CartContext = createContext({
     showCart:(item)=>{},
     addItemToCart:(id)=>{},
     removeItemFromCart:(id)=>{},
-    isLoggedIn:null,
-    isLoggedInFunction:(token)=>{}
+    isLoggedIn:{loggedIn:false,
+        token:null},
+    isLoggedInFunction:(param)=>{},
+    tokenFunction:(token)=>{},
+    loadFromCrud:(cart)=>{},
+    itemsFromCrud:(params)=>{}
 })
 
 export default CartContext
