@@ -1,15 +1,16 @@
 import React from "react";
-// import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Route, Redirect } from "react-router-dom";
 import STORE from "./Components/Store/STORE";
 import HOME from "./Components/Home/HOME";
 import ABOUT from "./Components/About/ABOUT";
 import CONTACT from "./Components/Contact/CONTACT";
+import LOGIN from "./Components/Login/LOGIN";
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
 import { Switch } from "react-router-dom/cjs/react-router-dom";
 import ProductDetail from "./Components/Store/ProductDetail";
 import CartProvider from "./Components/Context/CartProvider";
+// import { createBrowserRouter, RouterProvider } from "react-router-dom";
 // import { Router } from "react-router-dom";
 // const Router = createBrowserRouter([
 //   { path: "/STORE", element: <STORE /> },
@@ -41,6 +42,9 @@ const App = () => {
           </Route>
           <Route path="/CONTACT">
             <CONTACT />
+          </Route>
+          <Route path="/LOGIN">
+            <LOGIN />
           </Route>
         </Switch>
       </main>

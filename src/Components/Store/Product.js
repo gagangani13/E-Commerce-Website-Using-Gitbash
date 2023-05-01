@@ -3,7 +3,6 @@ import { Card, Button } from "react-bootstrap";
 import { Redirect, Route } from "react-router-dom/cjs/react-router-dom.min";
 import CartContext from "../Context/CartContext";
 import ProductDetail from "./ProductDetail";
-
 const Product = () => {
   
   const[reRoute,setRoute]=useState(null)
@@ -18,7 +17,7 @@ const Product = () => {
   return (
     <div
       className="container"
-      style={{ maxWidth: "67vw", padding: "20px 30px", margin: "auto" }}
+      style={{ maxWidth: "75vw", padding: "20px 30px", margin: "auto" }}
     >
       <div
         className="d-flex justify-content-around flex-wrap"
@@ -26,7 +25,7 @@ const Product = () => {
       >
         {details.items.map((item) => {
           return (
-            <Card style={{ width: "18rem" }}>
+            <Card style={{ width: "30rem" }}>
               <div id={item.Id}>
                 <Card.Title className="text-center" onClick={clicked}>
                   {item.title}
@@ -34,7 +33,7 @@ const Product = () => {
                 <Card.Img variant="top" onClick={clicked} src={item.imageUrl} />
               </div>
               <Card.Body className="d-flex align-items-baseline justify-content-between">
-                <Card.Text className="">${item.price}</Card.Text>
+                <Card.Text style={{fontSize:'large'}}>${item.price}</Card.Text>
                 <Button variant="primary" id={item.Id} onClick={addItemToCart}>
                   ADD TO CART
                 </Button>

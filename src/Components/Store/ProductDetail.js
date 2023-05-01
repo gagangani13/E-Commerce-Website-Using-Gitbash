@@ -45,10 +45,10 @@ const ProductDetail = () => {
         {details.items.map((item) => {
           return (
             Number(item.Id) === Number(Id) && (
-              <Card style={{ width: "50%" }}>
+              <Card style={{ width: "50%" ,fontSize:'20px',fontWeight:'bold'}}>
                 <Card.Title>{item.title}</Card.Title>
                 <Card.Img variant="top" src={item.imageUrl} />
-                <Card.Body className='d-grid' style={{rowGap:'1rem'}}>
+                <Card.Body className='d-grid' style={{rowGap:'1rem',gridTemplateColumns:'50% 50%',}}>
                   <Card.Text>
                     Ratings:
                     <i class="fa-solid fa-star"></i>
@@ -57,6 +57,7 @@ const ProductDetail = () => {
                     <i class="fa-solid fa-star"></i>
                     <i class="fa-solid fa-star-half"></i>
                   </Card.Text>
+                  <Card.Text>Price: ${item.price}</Card.Text>
                   <Button variant="danger" onClick={goBack}>GO BACK</Button>
                   <Button id={item.Id} variant="primary"onClick={addItemToCart}>ADD TO CART</Button>
                 </Card.Body>
