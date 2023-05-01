@@ -1,10 +1,10 @@
-import React, { useContext } from "react";
+import React, {  } from "react";
 import { Container, Navbar, NavbarBrand } from "react-bootstrap";
 // import { Link } from "react-router-dom/cjs/react-router-dom";
 import { NavLink } from "react-router-dom/cjs/react-router-dom";
-import CartContext from "./Context/CartContext";
+// import CartContext from "./Context/CartContext";
 const Header = () => {
-  const ctx=useContext(CartContext)
+  // const ctx=useContext(CartContext)
   return (
     <Navbar
       bg="dark"
@@ -14,10 +14,10 @@ const Header = () => {
       style={{ zIndex: "5" }}
     >
       <Container >
-        {ctx.isLoggedIn&&<NavLink to="/HOME"><NavbarBrand>HOME</NavbarBrand></NavLink>}
-        {ctx.isLoggedIn&&<NavLink to="/STORE"><NavbarBrand>STORE</NavbarBrand></NavLink>}
-        {ctx.isLoggedIn&&<NavLink to="/ABOUT"><NavbarBrand>ABOUT</NavbarBrand></NavLink>}
-        {ctx.isLoggedIn&&<NavLink to="/CONTACT"><NavbarBrand>CONTACT US</NavbarBrand></NavLink>}
+        <NavLink to="/HOME"><NavbarBrand>HOME</NavbarBrand></NavLink>
+        <NavLink to="/STORE"><NavbarBrand>STORE</NavbarBrand></NavLink>
+        <NavLink to="/ABOUT"><NavbarBrand>ABOUT</NavbarBrand></NavLink>
+        <NavLink to="/CONTACT"><NavbarBrand>CONTACT US</NavbarBrand></NavLink>
         <NavLink to="/LOGIN"><NavbarBrand>LOGIN</NavbarBrand></NavLink>
       </Container>
     </Navbar>

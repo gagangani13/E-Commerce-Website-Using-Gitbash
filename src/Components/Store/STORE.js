@@ -3,6 +3,7 @@ import { Card, Button, Badge } from "react-bootstrap";
 import CartContext from "../Context/CartContext";
 import Product from "./Product";
 import CartDisplay from "./CartDisplay";
+import { Route,Redirect } from "react-router-dom/cjs/react-router-dom";
 const STORE= () => {
   const details = useContext(CartContext)
   return (
@@ -47,6 +48,8 @@ const STORE= () => {
         >
           SEE CART
         </Button>
+        {!details.isLoggedIn&&<Route>
+          <Redirect to='/LOGIN'/></Route>}
       </div>
     </>
   );
