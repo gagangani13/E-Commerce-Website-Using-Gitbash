@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext} from "react";
 import { Card, Button, Badge } from "react-bootstrap";
 import CartContext from "../Context/CartContext";
 import Product from "./Product";
@@ -6,9 +6,12 @@ import CartDisplay from "./CartDisplay";
 import { Route,Redirect } from "react-router-dom/cjs/react-router-dom";
 const STORE= () => {
   const details = useContext(CartContext)
+  
   return (
     <>
-      <div>
+    {!details.isLoggedIn.loggedIn&&<Route>
+          <Redirect to='/LOGIN'/></Route>}
+      {details.isLoggedIn.loggedIn&&<div>
         <Button
           variant="primary"
           style={{ zIndex: "6", position: "fixed", right: "1%", top: "0%" }}
@@ -48,9 +51,7 @@ const STORE= () => {
         >
           SEE CART
         </Button>
-        {!details.isLoggedIn.loggedIn&&<Route>
-          <Redirect to='/LOGIN'/></Route>}
-      </div>
+      </div>}
     </>
   );
 };

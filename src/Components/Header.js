@@ -1,28 +1,24 @@
 import React, {  useContext, useEffect} from "react";
 import { Container, Navbar, NavbarBrand } from "react-bootstrap";
-// import { Link } from "react-router-dom/cjs/react-router-dom";
 import { NavLink } from "react-router-dom/cjs/react-router-dom";
 import CartContext from "./Context/CartContext";
 const Header = () => {
   const ctx=useContext(CartContext)
   function logout(){
-    ctx.loadFromCrud(ctx.items)
     ctx.isLoggedInFunction(false)
     localStorage.removeItem('Login')
-    localStorage.removeItem('CrudID')
     localStorage.removeItem('Cart')
+    localStorage.removeItem('Token')
   }
   useEffect(()=>{
-    if(localStorage.getItem('Login'==='false')){
+    if(localStorage.getItem('Login')==='false'){
       ctx.isLoggedInFunction(false)
       localStorage.removeItem('Token')
       localStorage.removeItem('Cart')
     }else{
       ctx.isLoggedInFunction(localStorage.getItem('Login'))
       ctx.tokenFunction(localStorage.getItem('Token'))
-      if(localStorage.getItem('Cart')){
-        ctx.itemsFromCrud(JSON.parse(localStorage.getItem('Cart')))
-      }
+      ctx.loadFromCrud()
     }
 
     // eslint-disable-next-line
